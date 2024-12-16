@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    /* General Page Styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(45deg, #f3f4f6, #f9fafb);
+      color: #333;
+    }
+
+    .dashboard-container {
+      display: grid;
+      grid-template-areas: 
+        "user-info user-info"
+        "trips-section features-section"
+        "expenses-section features-section"
+        "graph-section features-section";
+      grid-gap: 20px;
+      padding: 20px;
+    }
+
+    /* Section Styles */
+    section {
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background: #ffffff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Hover Effects */
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* User Info Styling */
+    .user-info {
+      grid-area: user-info;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+      color: white;
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    /* Trips Section Styling */
+    .trips-section {
+      grid-area: trips-section;
+      background: linear-gradient(45deg, #a18cd1, #fbc2eb);
+    }
+
+    .trip-category {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      background: #ffffff;
+    }
+
+    /* Expenses Section Styling */
+    .expenses-section {
+      grid-area: expenses-section;
+      background: linear-gradient(45deg, #84fab0, #8fd3f4);
+      color: #2a2a72;
+      text-align: center;
+    }
+
+    /* Graph Section Styling */
+    .graph-section {
+      grid-area: graph-section;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+      text-align: center;
+      padding: 20px;
+    }
+
+    .graph-canvas {
+      width: 100%;
+      max-width: 500px;
+      margin: 20px auto;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #ff6f61;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #ff4b47;
+    }
+
+    /* Features Section Styling */
+    .features-section {
+      grid-area: features-section;
+      background: linear-gradient(45deg, #ffecd2, #fcb69f);
+    }
+
+    .feature {
+      margin: 15px 0;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .dashboard-container {
+        grid-template-areas: 
+          "user-info"
+          "trips-section"
+          "expenses-section"
+          "graph-section"
+          "features-section";
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- User Info Section -->
+    <section class="user-info">
+      <h2>Welcome, <span id="username">User</span>!</h2>
+      <button id="connectWallet">Connect Wallet</button>
+      <p id="walletAddress">Wallet Address: Not connected</p>
+    </section>
+
+    <!-- Trips Section -->
+    <section class="trips-section">
+      <h2>Trips</h2>
+      <div class="trip-category">
+        <h3>Current Trip</h3>
+        <p>No current trip</p>
+      </div>
+      <div class="trip-category">
+        <h3>Upcoming Trips</h3>
+        <p>2 upcoming trips</p>
+      </div>
+      <div class="trip-category">
+        <h3>Past Trips</h3>
+        <p>5 past trips</p>
+      </div>
+    </section>
+
+    <!-- Expenses Tracker Section -->
+    <section class="expenses-section">
+      <h2>Expenses Tracker</h2>
+      <p>Total Spent: $1230</p>
+    </section>
+
+    <!-- Graph Section -->
+    <section class="graph-section">
+      <h2>Daily Expense Overview</h2>
+      <canvas id="expenseGraph" class="graph-canvas"></canvas>
+      <p>Average Daily Budget for Next Trip: $120</p>
+      <button id="detailedReviewBtn">Detailed Review of Expenditure</button>
+    </section>
+
+    <!-- Additional Features Section -->
+    <section class="features-section">
+      <h2>Features</h2>
+      <div class="feature">
+        <h3>Search</h3>
+        <input type="text" placeholder="Search plans...">
+      </div>
+      <div class="feature">
+        <h3>Trending Plans</h3>
+        <ul>
+          <li>Beach Vacation</li>
+          <li>Mountain Trekking</li>
+          <li>City Tour</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>Transaction History</h3>
+        <p>No recent transactions</p>
+      </div>
+      <div class="feature">
+        <h3>Budget for Next Trip</h3>
+        <p>Planned Budget: $1500</p>
+      </div>
+      <div class="feature">
+        <h3>Wallet Information</h3>
+        <p>Available Balance: $500</p>
+      </div>
+      <div class="feature">
+        <h3>Settings</h3>
+        <button>Manage Settings</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.8.1/web3.min.js"></script>
+  <script>
+    // Dynamically Update Username
+    document.getElementById('username').textContent = 'User';
+
+    // Create Graph Data
+    const ctx = document.getElementById('expenseGraph').getContext('2d');
+    const expenseData = {
+      labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
+      datasets: [
+        {
+          label: 'Daily Expenses',
+          data: [50, 60, 70, 40, 90],
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        },
+        {
+          label: 'Average Budget',
+          data: [60, 60, 60, 60, 60],
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }
+      ]
+    };
+
+    const expenseChart = new Chart(ctx, {
+      type: 'bar',
+      data: expenseData,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Web3.js Integration
+    const connectWalletButton = document.getElementById('connectWallet');
+    const walletAddressDisplay = document.getElementById('walletAddress');
+    let isWalletConnected = false;
+
+    connectWalletButton.addEventListener('click', async () => {
+      if (isWalletConnected) {
+        // Disconnect Wallet
+        walletAddressDisplay.textContent = 'Wallet Address: Not connected';
+        connectWalletButton.textContent = 'Connect Wallet';
+        isWalletConnected = false;
+      } else {
+        // Connect Wallet
+        if (typeof window.ethereum !== 'undefined') {
+          try {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            const walletAddress = accounts[0];
+            walletAddressDisplay.textContent = `Wallet Address: ${walletAddress}`;
+            connectWalletButton.textContent = 'Disconnect Wallet';
+            isWalletConnected = true;
+          } catch (error) {
+            console.error('Error connecting to wallet:', error);
+            walletAddressDisplay.textContent = 'Wallet Address: Connection failed';
+          }
+        } else {
+          alert('MetaMask is not installed. Please install it to use this feature.');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
